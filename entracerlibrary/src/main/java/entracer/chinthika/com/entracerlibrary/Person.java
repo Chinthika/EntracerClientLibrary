@@ -50,7 +50,10 @@ public class Person {
     }
 
     public void setType(String type) {
-        this.type = type;
+        if (type.equals("Lead") || type.equals("Converted"))
+            this.type = type;
+        else
+            throw new AssertionError("type should be either Lead or Converted");
     }
 
     public String getFirst_name() {
@@ -90,7 +93,18 @@ public class Person {
     }
 
     public void setStatus(String status) {
-        this.status = status;
+        if (this.type.equals("Lead")) {
+            if (status.equals("new") || status.equals("validated") || status.equals("qualified") || status.equals("rejected"))
+                this.status = status;
+            else
+                throw new AssertionError("new, validated, qualified, rejected are only allowed for Lead");
+        } else if (this.type.equals("Converted")) {
+            if (status.equals("active") || status.equals("archived") || status.equals("blacklisted"))
+                this.status = status;
+            else
+                throw new AssertionError("active, archived, blacklisted are only for Converted");
+        } else
+            throw new AssertionError("before setting status type should set");
     }
 
     public String getRating() {
@@ -98,7 +112,10 @@ public class Person {
     }
 
     public void setRating(String rating) {
-        this.rating = rating;
+        if (Float.parseFloat(rating) >= 1 && Float.parseFloat(rating) <= 5)
+            this.rating = rating;
+        else
+            throw new AssertionError("rating should be between 1 and 5");
     }
 
     public String getDepartment() {
@@ -114,7 +131,10 @@ public class Person {
     }
 
     public void setDo_not_call(String do_not_call) {
-        this.do_not_call = do_not_call;
+        if (do_not_call.equals("true") || do_not_call.equals("false"))
+            this.do_not_call = do_not_call;
+        else
+            throw new AssertionError("do not call should be either true or false");
     }
 
     public String getTitle() {
